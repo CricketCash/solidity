@@ -134,6 +134,11 @@ string IRGenerationContext::internalDispatch(size_t _in, size_t _out)
 		templ("in", suffixedVariableNameList("in_", 0, _in));
 		templ("arrow", _out > 0 ? "->" : "");
 		templ("out", suffixedVariableNameList("out_", 0, _out));
+
+		// UNIMPLEMENTED: Internal library calls via pointers are not implemented yet.
+		// We're not generating code for internal library functions here even though it's possible
+		// to call them via pointers. Right now such calls end up triggering the `default` case in
+		// the switch above.
 		vector<map<string, string>> functions;
 		for (auto const& contract: mostDerivedContract().annotation().linearizedBaseContracts)
 			for (FunctionDefinition const* function: contract->definedFunctions())
