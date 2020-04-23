@@ -771,6 +771,15 @@ void IRGeneratorForStatements::endVisit(FunctionCall const& _functionCall)
 	{
 		break;
 	}
+	case FunctionType::Kind::BlockHash:
+	{
+		solAssert(arguments.size() == 1, "");
+		IntegerType const* type = TypeProvider::uint(8);
+		IRVariable argument = convert(*arguments.front(), *type);
+		define(_functionCall) << "blockhash(" << argument.commaSeparatedList() << ")\n";
+
+		break;
+	}
 	default:
 		solUnimplemented("FunctionKind " + toString(static_cast<int>(functionType->kind())) + " not yet implemented");
 	}
